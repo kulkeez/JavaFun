@@ -77,9 +77,7 @@ public class MultiplicationQuizzer {
 					else {
 						System.out.println("Whoa! You should input an integer and then hit <Enter>.");
 						--totalQuestions;
-						
-						//TODO - fix the bug 
-						//need to add the integer back into the shuffled linkedlist when user didn't input a correct integer
+						integerList.add(randInteger);
 					}
 				}
 			}
