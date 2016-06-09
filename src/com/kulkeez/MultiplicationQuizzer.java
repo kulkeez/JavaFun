@@ -42,21 +42,24 @@ public class MultiplicationQuizzer {
 			String userName = stdin.readLine();
 			
 			System.out.println("Hello " + userName + "! Testing how well you have memorized multiplication tables. All the best!");	
-			System.out.println("Practice which table? Enter any number (between 1 - 10):");
+			System.out.println("Practice which table? Enter any number (between 1 - 15):");
 			
-			if((input = stdin.readLine()) != null){
+			String tableFor = stdin.readLine();
+			int inputTable = Integer.parseInt(tableFor);
+			
+			if(inputTable > 0 && inputTable <= 15){
 				
 				// Pose only 10 questions - needs to be configurable
 				while (++totalQuestions <= 10) {
-					//commenting out this call as randomness generating same integers again
+					//commenting out the line below as randomness generating same integers again
 					//randInteger = getRandomNumberInRange(1, 10);
 					randInteger = getRandomNumberFromShuffleList();
 				
 					//System.out.println("randInteger = " + randInteger);
-					//System.out.println("input = " + input);
+					//System.out.println("inputTable = " + input);
 
-					System.out.println(totalQuestions + ". What is " + input  + " X " + randInteger + ": ");
-					answer = Integer.parseInt(input) * randInteger;
+					System.out.println(totalQuestions + ". What is " + inputTable  + " X " + randInteger + ": ");
+					answer = inputTable * randInteger;
 
 					userAnswer = stdin.readLine();
 					
@@ -69,7 +72,7 @@ public class MultiplicationQuizzer {
 						}
 						else {
 							System.out.println("No " + userName + "! The correct Answer: " 
-									+ input  + " X " + randInteger + " = " + answer +
+									+ inputTable  + " X " + randInteger + " = " + answer +
 									". Your Score = " + score + "/" + totalQuestions);
 							System.out.println();
 						}
@@ -79,16 +82,20 @@ public class MultiplicationQuizzer {
 						--totalQuestions;
 						integerList.add(randInteger);
 					}
+					
 				}
+				
+				// Print final result
+				if(score <= 7)
+					System.out.println("Hey " + userName + ", practice, practice, practice !");
+				else if(score < 9 ) 
+					System.out.println("Good job, " + userName + "!!!");
+				else  
+					System.out.println("Awesome, " + userName + "!!!");
 			}
-			
-			// Print final result
-			if(score <= 7)
-				System.out.println("Hey " + userName + ", practice, practice, practice !");
-			else if(score < 9 ) 
-				System.out.println("Good job, " + userName + "!!!");
-			else  
-				System.out.println("Awesome, " + userName + "!!!");
+			else {
+				System.out.println("Oh - Let's practice tables for any number between 1 - 15 only. Please restart the program.");
+			}
 		}
 		catch(IOException io){
 			io.printStackTrace();
