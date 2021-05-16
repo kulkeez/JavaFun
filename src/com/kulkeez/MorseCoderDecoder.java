@@ -4,6 +4,10 @@ package com.kulkeez;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Program to convert English text into Morse code and vice versa. 
  * I was inspired to write this code after reading "Code - Charles Petzold"
@@ -24,6 +28,8 @@ public class MorseCoderDecoder {
             "-.--", "--..", ".----", "..---", "...--", "....-", ".....",
             "-....", "--...", "---..", "----.", "-----", "|" };
 
+    private static final Logger logger = LoggerFactory.getLogger(MorseCoderDecoder.class);
+    
     /**
      * 
      * @param args
@@ -31,25 +37,31 @@ public class MorseCoderDecoder {
 	public static void main(String[] args) {
 	    Scanner input = new Scanner(System.in);
 
+		// Set up a simple configuration that logs on the console.
+    	BasicConfigurator.configure();
+    	logger.debug("Launching the Morse Coder / Decoder program ...");
+		
 	    System.out.println("Enter 'E' to convert from English to Morse code or 'M' to convert from Morse code to English:");
 	    String ans = input.nextLine();
 
 	    if (("e").equalsIgnoreCase(ans)) {
 	        System.out.println("Please enter the text you would like to convert to Morse Code: ");
 	        String english = input.nextLine();
-	        System.out.println("English text: " + english);
+	        System.out.println("You entered the English text: " + english);
 	        
 	        char[] translateThis = (english.toLowerCase()).toCharArray();
 	        System.out.println("Translated Morse code: " + MorseCoderDecoder.toMorse(translateThis)); 
 	    }
 	    else if ("m".equalsIgnoreCase(ans)) {
 	        System.out.println("Please enter the Morse code you would like to convert to English (separate words with '|'):");
+	        System.out.println("Example Morse Code Input: ....|.-|.--.|.--.|-.-- ");
 	        String morseText = input.nextLine();
-
+	        System.out.println("You entered the Morse Code: " + morseText);
+	        
 	        String[] morseTextMinusPipe = (morseText.split("[|]", 0));
 	        System.out.println("Translating Morse: " + Arrays.toString(morseTextMinusPipe));
 
-	        System.out.println("Morse to English text: " + MorseCoderDecoder.toEnglish(morseTextMinusPipe));
+	        System.out.println("Morse code to English text: " + MorseCoderDecoder.toEnglish(morseTextMinusPipe));
 	    }
 	    else
 	    	System.out.println("Invalid input, please try again.");
@@ -73,6 +85,8 @@ public class MorseCoderDecoder {
 				morse += "  ";	// separate each morse letter with 2 spaces for readability
 			}
 		}
+		
+		logger.debug("Morse = " + morse);
 		return morse;
 	}
 
@@ -88,17 +102,18 @@ public class MorseCoderDecoder {
 		String english = "";
 
 		for (String morseString : translateMorse) {
-			//System.out.println("Decoding Morse: " + morseString);
+			logger.debug("Decoding Morse: {0}", morseString);
 			
 			// map dotties to alpha
 			for (int i = 0; i < dotties.length; i++) {
 				if(dotties[i].equals(morseString)) {
-					//System.out.println("Decoded to: " + alpha[i]);
+					logger.trace("Decoded to: " + dotties[i]);
 					english += alphabets[i];
 				}
 	        }
 
 		}
+		logger.debug("English: " + english);
 		return english;
 	}
 }
