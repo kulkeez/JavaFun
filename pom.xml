@@ -6,10 +6,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.kulkeez</groupId>
   <artifactId>kulkeez</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   
   <prerequisites>
-   	<maven>3.3.3</maven>
+   	<maven>3.6.3</maven>
   </prerequisites>
   
   <!-- Project Meta Data -->
@@ -34,12 +34,14 @@
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   	<jdk.version>1.8</jdk.version>
+	
 	<maven.compiler.plugin>3.8.1</maven.compiler.plugin>
 	<maven.javadoc.plugin>3.0.1</maven.javadoc.plugin>
 	<maven.jar.plugin>3.1.1</maven.jar.plugin>
 	<maven.dependency.plugin>3.0.2</maven.dependency.plugin>
+  	
   	<!-- included libraries -->
-	<junit.version>4.12</junit.version>
+	<junit.version>4.13.2</junit.version>
 	<slf4j.version>1.7.30</slf4j.version>
   </properties>   
   	
