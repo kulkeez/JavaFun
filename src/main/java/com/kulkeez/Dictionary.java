@@ -1,16 +1,20 @@
 package com.kulkeez;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * 
  * Dictionary of adjectives and nouns.
- * This dictionary can be used to pick a word and use it for simulation
+ * This dictionary can be used to pick a word and use it for simulating interesting names
  * 
  * @author Vikram Kulkarni
  *
@@ -20,27 +24,23 @@ public class Dictionary {
     private List<String> adjectives = new ArrayList<String>();
 
     private final int prime;
-
+        
+    private static final Logger logger = LoggerFactory.getLogger(Dictionary.class);
+    
     /**
      * Default constructor that loads the resource files
      * 
      */
     public Dictionary() {
-        try {
-        	System.out.println("Loading Adjectives and Nouns resource files...");
-            load("a.txt", adjectives);
-            load("n.txt", nouns);
-            
-            System.out.println("Loaded Adjectives and Nouns into the Dictionary successfully!");
-        } 
-        catch (IOException e) {
-            throw new Error(e);
-        }
+       	logger.debug("Loading Adjectives and Nouns resource files...");
+        
+       	loadDictionaryResources("a.txt", adjectives);
+        loadDictionaryResources("n.txt", nouns);
 
-        int combo = size();
+        int combinedSize = size();
         int primeCombo = 2;
         
-        while (primeCombo <= combo) {
+        while (primeCombo <= combinedSize) {
             int nextPrime = primeCombo + 1;
             primeCombo *= nextPrime;
         }
@@ -70,7 +70,7 @@ public class Dictionary {
      * @param i
      * @return Word from the dictionary
      */
-    public String word(int i) {
+    public String getWord(int i) {
         int a = i % adjectives.size();
         int n = i / adjectives.size();
 
@@ -83,19 +83,28 @@ public class Dictionary {
 	 *   
 	 * @param fileName
 	 * @param col
-	 * @throws IOException
+	 * 
 	 */
-    private void load(String fileName, List<String> col) throws IOException {
-    	System.out.println("Loading resource file: " + fileName);
+    private void loadDictionaryResources(String fileName, List<String> col) {
     	try {
-    		BufferedReader resourceReader = new BufferedReader(
-    			new InputStreamReader(getClass().getResourceAsStream(fileName), "US-ASCII"));
-    		String line;
-        
-    		while ((line = resourceReader.readLine()) != null) {
-    			//System.out.println("Line:" + line);
-    			col.add(line);
+			String line;
+	    	logger.debug("Loading resource file: {}", fileName);
+
+	    	InputStream is = getClass().getResourceAsStream(fileName);
+			
+    		if (is != null) {
+    			BufferedReader resourceReader = new BufferedReader(
+    					new InputStreamReader(is, "US-ASCII"));
+
+    			logger.debug("Loaded Adjectives and Nouns into the Dictionary successfully!");
+
+	    		while ((line = resourceReader.readLine()) != null) {
+	    			//System.out.println("Line:" + line);
+	    			col.add(line);
+	    		}
     		}
+    		else
+    			logger.error("Class loader is unable to load Dictionary resource files!");
     	}
     	catch(Exception e) {
     		e.printStackTrace();
@@ -103,8 +112,7 @@ public class Dictionary {
     }
 
     static final Dictionary INSTANCE = new Dictionary();
-    
-    
+
     /**
      * Quick unit test the functionality 
      * 
@@ -112,8 +120,12 @@ public class Dictionary {
      */
     public static void main (String args[]) {
     	try {
-    	Dictionary d = new Dictionary();
-    	System.out.println("Dictionary Size is:" + d.size());
+    		// Set up a simple configuration that logs on the console.
+        	BasicConfigurator.configure();
+        	logger.debug("Launching the Dictionary ...");
+        	
+    		Dictionary d = new Dictionary();
+    		logger.debug("Dictionary Size is: {}", d.size());
     	}
     	catch(Exception e) {
     		e.printStackTrace();
