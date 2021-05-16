@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Zombies {
 
-	private static final List ZOMBIES = new ArrayList<>();
+	private static final List<Zombies> ZOMBIES = new ArrayList<>();
 	
 	private int num;
 	
@@ -41,18 +41,23 @@ public class Zombies {
 		
 		// Set up a simple configuration that logs on the console.
     	BasicConfigurator.configure();
-    	logger.debug("Launching the Zombies ATTACK !!!!");
+    	logger.info("Launching the Zombies ATTACK !!!!");
     	
-		for (int i = 0; i < 3; i++)
+		for (int i = 1; i <= 3; i++)
             ZOMBIES.add(new Zombies(i));
         
-		for (int j = 0; j < 5; j++) {
-            logger.debug("Zombies: " + ZOMBIES);
+		for (int j = 1; j <= 5; j++) {
+            logger.info("Zombies: {}", ZOMBIES);
             
             ZOMBIES.clear();
             System.gc();
-            Thread.sleep(100);
+            logger.debug("Forcefully called the Garbage collector {} time(s)", j);
+            
+            logger.debug("Sleeping 1 second...");
+            Thread.sleep(1000);
         }
+		logger.info("Observe the output above: finalize() is only called ONCE! Therefore, the ZOMBIES are resurrected only once.");
+		logger.info("SUMMARY: Avoid using finalize(). It will only be called once if the object is resurrected.");
 	}
 
 	
