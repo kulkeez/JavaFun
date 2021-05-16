@@ -3,6 +3,10 @@ package com.kulkeez;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * Generates pseudo random unique names that combines one adjective and one noun,
@@ -16,6 +20,8 @@ import java.util.Set;
  *  
  */
 public class RandomNameGenerator {
+
+	private static final Logger logger = LoggerFactory.getLogger(RandomNameGenerator.class);
 
 	private int pos;
 
@@ -39,12 +45,12 @@ public class RandomNameGenerator {
      * @return
      */
     public synchronized String next() {
-        Dictionary d = Dictionary.INSTANCE;
-        pos = Math.abs(pos + d.getPrime()) % d.size();
+        Dictionary dictionary = Dictionary.INSTANCE;
+        pos = Math.abs(pos + dictionary.getPrime()) % dictionary.size();
         
-        //System.out.println("Picking random Position in Dictonary: " + pos);
+        logger.debug("Picking this random position within the Dictionary: {}", pos);
         
-        return d.word(pos);
+        return dictionary.getWord(pos);
     }
 
     
@@ -54,12 +60,23 @@ public class RandomNameGenerator {
      * @param args
      */
     public static void main (String args[]) {
-    	RandomNameGenerator namesGenerator = new RandomNameGenerator(0);
-    	
-    	int sz = Dictionary.INSTANCE.size();
-        Set<String> s = new HashSet<String>(sz);
-
-        for (int i=0; i<10; i++)
-        	System.out.println(namesGenerator.next());
+    	try {
+			// Set up a simple configuration that logs on the console.
+	    	BasicConfigurator.configure();
+	    	logger.debug("Launching the Random Name Generator program ...");
+	
+	    	RandomNameGenerator namesGenerator = new RandomNameGenerator(0);
+	    	
+	    	int sz = Dictionary.INSTANCE.size();
+	        Set<String> s = new HashSet<String>(sz);
+	
+	        logger.debug("Generating 10 random names...");
+	        
+	        for (int i=0; i<10; i++)
+	        	logger.debug(namesGenerator.next());
+	    }
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
     }
 }
