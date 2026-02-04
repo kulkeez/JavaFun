@@ -3,78 +3,92 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
 		 					 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		 					 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.kulkeez</groupId>
-  <artifactId>kulkeez</artifactId>
-  <version>0.0.1</version>
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.kulkeez</groupId>
+  	<artifactId>kulkeez</artifactId>
+  	<version>0.0.1</version>
   
-  <prerequisites>
-   	<maven>3.6.3</maven>
-  </prerequisites>
+  	<prerequisites>
+   		<maven>3.6.3</maven>
+  	</prerequisites>
   
-  <!-- Project Meta Data -->
-  <name>JavaFun</name>
-  <url>http://maven.apache.org</url>
-  <inceptionYear>2016</inceptionYear>
+  	<!-- Project Meta Data -->
+  	<name>JavaFun</name>
+  	<url>http://maven.apache.org</url>
+  	<inceptionYear>2016</inceptionYear>
 
-  <developers>
-  	<developer>
-      <id>kulkarvi</id>
-      	<name>Vikram Kulkarni</name>
-      	<email>kulkeez@yahoo.com</email>
-		<roles>
-			<role>Programmer</role>
-		</roles>
-		<timezone>+5</timezone>  
-	</developer>	
-  </developers>
+  	<developers>
+  		<developer>
+      		<id>kulkarvi</id>
+      		<name>Vikram Kulkarni</name>
+      		<email>kulkeez@yahoo.com</email>
+			<roles>
+				<role>Programmer</role>
+			</roles>
+			<timezone>+5</timezone>  
+		</developer>	
+  	</developers>
   
-  <properties>
-	<antlr.runtime.version>3.4</antlr.runtime.version>
-  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  	<jdk.version>11</jdk.version>
+  	<properties>
+		<antlr.runtime.version>3.4</antlr.runtime.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<jdk.version>11</jdk.version>
 	
-	<!-- plugin versions -->
-	<maven.compiler.plugin>3.8.1</maven.compiler.plugin>
-	<maven.javadoc.plugin>3.2.0</maven.javadoc.plugin>
-	<maven.jar.plugin>3.2.0</maven.jar.plugin>
-	<maven.dependency.plugin>3.1.2</maven.dependency.plugin>
-	<maven.shade.plugin>3.2.4</maven.shade.plugin>
-  	
-  	<!-- included libraries -->
-	<junit.version>4.13.2</junit.version>
-	<slf4j.version>1.7.30</slf4j.version>
-	<commons-cli.version>1.4</commons-cli.version>
-  </properties>   
-  	
-  <dependencies> 
-	<!-- compile scope -->
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>${slf4j.version}</version>
-	</dependency>
-	  
-	<dependency>
-	  	<groupId>org.slf4j</groupId>
-	  	<artifactId>slf4j-log4j12</artifactId>
-	  	<version>${slf4j.version}</version>
-	</dependency>
+		<!-- plugin versions -->
+		<maven.compiler.plugin>3.8.1</maven.compiler.plugin>
+		<maven.javadoc.plugin>3.2.0</maven.javadoc.plugin>
+		<maven.jar.plugin>3.2.0</maven.jar.plugin>
+		<maven.dependency.plugin>3.1.2</maven.dependency.plugin>
+		<maven.shade.plugin>3.2.4</maven.shade.plugin>
 		
-    <dependency>
-        <groupId>commons-cli</groupId>
-        <artifactId>commons-cli</artifactId>
-        <version>${commons-cli.version}</version>
-    </dependency>
-    
-	<!-- test scope -->
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>${junit.version}</version>
-		<scope>test</scope>
-	</dependency>    
+		<!-- included libraries -->
+		<junit.version>4.13.2</junit.version>
+		<slf4j.version>1.7.30</slf4j.version>
+		<commons-cli.version>1.4</commons-cli.version>
+  	</properties>   
+  	
+  	<dependencies> 
+		<!-- compile scope -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>${commons-cli.version}</version>
+		</dependency>
+		
+		<!-- test scope -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	    <!-- Apache Commons Math for linear regression -->
+	    <dependency>
+	        <groupId>org.apache.commons</groupId>
+	        <artifactId>commons-math3</artifactId>
+	        <version>3.6.1</version>
+	    </dependency>
+	    
+	    <!-- OpenCSV for reading CSV files -->
+	    <dependency>
+	        <groupId>com.opencsv</groupId>
+	        <artifactId>opencsv</artifactId>
+	        <version>5.7.1</version>
+	    </dependency>	
   </dependencies>
   
   <build>
@@ -121,7 +135,7 @@
 			<configuration>
 				<archive>
 			  		<manifest>
-			  			<mainClass>com.kulkeez.MorseCoderDecoder</mainClass>
+			  			<mainClass>com.kulkeez.regression.prediction.CustomerPurchasePredictor</mainClass>
 						<addClasspath>true</addClasspath>
 						<classpathPrefix>dependency-jars/</classpathPrefix>
 			  		</manifest>
@@ -181,20 +195,14 @@
 	    				</excludes> 
   					</filter> 
 				</filters>
-        	</configuration>
-        	
-        	<executions>
-          		<execution>
-          			<id>test</id>
-            		<phase>package</phase>
-            		<goals>
-              			<goal>shade</goal>
-            		</goals>
-          		</execution>
-        	</executions>
-      	</plugin>
-      	
+
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>com.kulkeez.regression.prediction.CustomerPurchasePredictor</mainClass>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </plugin>
     </plugins>
-    
   </build>
 </project>
