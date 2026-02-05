@@ -88,7 +88,21 @@
 	        <groupId>com.opencsv</groupId>
 	        <artifactId>opencsv</artifactId>
 	        <version>5.7.1</version>
-	    </dependency>	
+	    </dependency>
+
+        <!-- Stanford CoreNLP with sentiment analysis -->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.5.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.5.9</version>
+            <classifier>models</classifier>
+        </dependency>			
   </dependencies>
   
   <build>
@@ -135,7 +149,7 @@
 			<configuration>
 				<archive>
 			  		<manifest>
-			  			<mainClass>com.kulkeez.regression.prediction.CustomerPurchasePredictor</mainClass>
+			  			<mainClass>com.kulkeez.ProductReviewAnalyzer</mainClass>
 						<addClasspath>true</addClasspath>
 						<classpathPrefix>dependency-jars/</classpathPrefix>
 			  		</manifest>
